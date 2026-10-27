@@ -1,0 +1,25 @@
+# Render Blueprint: New > Blueprint > pick this repo.
+# Secrets marked sync:false are asked for in the dashboard, never stored in git.
+services:
+  - type: web
+    name: jira-mcp
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: JIRA_BASE_URL
+        sync: false
+      - key: JIRA_EMAIL
+        sync: false
+      - key: JIRA_API_TOKEN
+        sync: false
+      - key: MCP_API_KEY
+        generateValue: true      # Render creates a random key; copy it into Coworker
+      - key: JIRA_DEPLOYMENT
+        value: cloud
+      - key: JIRA_READ_ONLY
+        value: "true"            # flip to "false" once you trust it
+      - key: JIRA_DEFAULT_PROJECT
+        sync: false
